@@ -10,7 +10,19 @@ dotenv.config();
 app.use(express.static("public"));
 
 //set global variable for views directory
-app.set("views", "./views");
+app.set("views", path.join(__dirname, "views"));
+
+//set view engine to ejs
+app.set("view engine", "ejs");
+const links = [
+  { url: "/", text: "Home" },
+  { url: "/about", text: "About" },
+  { url: "/contact", text: "Contact" },
+  { url: "/authors", text: "Authors" },
+  { url: "/books", text: "Books" },
+];
+
+app.locals.links = links;
 
 const bookRouter = require("./routes/bookRouter");
 const authorRouter = require("./routes/authorRouter");
@@ -23,7 +35,9 @@ app.use("/", indexRouter);
 
 // Define 404 route
 app.use("*", (req, res) => {
-  res.sendFile(__dirname + "/views/404.html");
+  res.render(__dirname + "/views/404.ejs", {
+    links: req.app.locals.links,
+  });
 });
 
 // Define ports

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('component/head.ejs', { title: 'Authors' }) %>
+<body>
+    <%- include('component/navbar.ejs', { links }) %>
+    <br>
+    <h1>Authors page</h1>
+    <p> <%= authors.length %> authors</p>
+    <!-- LIST OF AUTHORS WITH LINK TO THEIR PAGES -->
+    <ul>
+      <% authors.forEach(author=>{ %>
+        <li><a href="/authors/<%= author.id %>"><%= author.name %></a></li>
+      <% }) %>
+    </ul>
+    
+</body>
+</html>

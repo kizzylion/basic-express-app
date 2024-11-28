@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('component/head.ejs', { title: 'Books' }) %>
+<body>
+    <%- include('component/navbar.ejs', { links }) %>
+    <br>
+    
+    <h1>Books page</h1>
+    <p>This is the books page</p>
+    <p> <%= books.length %> books</p>
+    <!-- LIST OF BOOKS WITH LINK TO THEIR PAGES -->
+     
+    <ul>
+      <% books.forEach((book)=>{ %>
+        <li><a href="/books/<%= book.id%>"><%= book.title %></a></li>
+      <%})%>
+    </ul>
+    <a href="/authors">Authors</a>
+
+</body>
+</html>

@@ -1,7 +1,8 @@
-const { getBooks, getBookById } = require("../db");
+const { getBooks, getBookById, getAuthorById } = require("../db");
 const path = require("path");
 
 const booksControllers = {
+  getAuthorById,
   getBooksController,
   getBookByIdController,
   reserveBookController,
@@ -10,22 +11,33 @@ const booksControllers = {
 async function getBooksController(req, res) {
   const books = await getBooks();
   const viewDir = path.join(__dirname, "..", "views");
-  console.log(books);
-  res.sendFile(path.join(viewDir, "books.html"));
+  res.render(path.join(viewDir, "books.ejs"), {
+    books,
+    links: req.app.locals.links,
+  });
 }
 
 async function getBookByIdController(req, res) {
   const book = await getBookById(req.params.id);
+  const author = await getAuthorById(book.authorId);
   const viewDir = path.join(__dirname, "..", "views");
-  console.log("Book: ", book);
-  res.sendFile(path.join(viewDir, "book-detail.html"));
+  res.render(path.join(viewDir, "book-detail.ejs"), {
+    book,
+    author,
+    links: req.app.locals.links,
+  });
 }
 
 async function reserveBookController(req, res) {
   const book = await getBookById(req.params.id);
+  const author = await getAuthorById(book.authorId);
   const viewDir = path.join(__dirname, "..", "views");
-  console.log("Book: ", book);
-  res.sendFile(path.join(viewDir, "book-reserve.html"));
+
+  res.render(path.join(viewDir, "book-reserve.ejs"), {
+    book,
+    author,
+    links: req.app.locals.links,
+  });
 }
 
 module.exports = booksControllers;

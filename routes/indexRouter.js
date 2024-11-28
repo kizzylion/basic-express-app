@@ -4,17 +4,23 @@ const path = require("path");
 
 indexRouter.get("/", (req, res) => {
   const viewsDir = path.join(__dirname, "..", "views");
-  res.sendFile(path.join(viewsDir, "index.html"));
+  res.render(path.join(viewsDir, "index.ejs"), {
+    links: req.app.locals.links,
+  });
 });
 
 indexRouter.get("/about", (req, res) => {
   const viewsDir = path.join(__dirname, "..", "views");
-  res.sendFile(path.join(viewsDir, "about.html"));
+  res.render(path.join(viewsDir, "about.ejs"), {
+    links: req.app.locals.links,
+  });
 });
 
 indexRouter.get("/contact", (req, res) => {
   const viewsDir = path.join(__dirname, "..", "views");
-  res.sendFile(path.join(viewsDir, "contact.html"));
+  res.render(path.join(viewsDir, "contact.ejs"), {
+    links: req.app.locals.links,
+  });
 });
 
 module.exports = indexRouter;
